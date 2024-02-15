@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Threaded Discussion</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+
+        .navbar a {
+          color: white;
+          text-decoration: none;
+          margin: 0 10px;
+          font-size: 18px;
+        }
+
+        .navbar-heading {
+          margin: 0;
+          font-size: 24px;
+        }
+
+        /* .logout-button {
+        background-color: #fc036b ;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.5s; /* Added transition property */
+
+        /* .logout-button:hover {
+        background-color: #fdca6b; /* Hover color */
+
+        .welcome-message {
+          text-align: center;
+          font-size: 25px;
+          margin: 2px 0;
+          padding-top: 20px;
+        }
+
+        .discussion-container {
+          max-width: 90%;
+          margin: 20px auto;
+          /* height: 50px; */
+        }
+
+        .question {
+          margin-bottom: 10px;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+
+        .reply {
+          margin-left: 20px;
+          padding: 10px;
+          border: 1px solid #eee;
+          border-radius: 5px;
+        }
+
+        .reply-icons {
+          margin-top: 10px;
+        }
+
+        .thumbs-up {
+          color: black;
+          cursor: pointer;
+        }
+
+        .thumbs-up.clicked {
+          color: blue;
+        }
+
+        .action-buttons {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 10px;
+          height: 30px;
+        }
+
+        #new-question {
+          flex: 1;
+          height: 30px;
+        }
+
+        .action-buttons button {
+          margin-left: 10px;
+        }
+
+        a {
+          text-decoration: none;
+        }
+
+        .col {
+          line-height: 2em;
+        }
+
+        ul {
+          list-style: none;
+        }
+
+        .navbar {
+          background-color: #313338;
+          width: 100%;
+          height: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px;
+          color: black;
+          font-size: 20px; /* Adjust font size as needed */
+        }
+
+        .navbar img {
+          width: 140px;
+          height: 50px;
+          margin-right: 50px;
+        }
+
+        #nav-links {
+          display: flex;
+          align-items: center;
+        }
+
+        #nav-links li {
+          margin: 0 15px;
+        }
+
+        .nav-links {
+          display: flex;
+          align-items: center;
+        }
+
+        .nav-links li {
+          margin: 0 30px;
+          cursor: pointer;
+        }
+
+        header {
+          width: 100vw;
+          height: 100vh;
+          background-image: url("/images/header.png");
+          background-position: bottom;
+          background-size: cover;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .header-content {
+          margin-bottom: 10px;
+          color: whitesmoke;
+          text-align: center;
+        }
+
+        .header-content h2 {
+          font-size: 9vmin;
+          margin-top: 500px;
+        }
+
+        .line {
+          width: 150px;
+          height: 4px;
+          background: #fc036b;
+          margin: 10px auto;
+          border-radius: 5px;
+        }
+
+        .header-content h1 {
+          font-size: 5vmin;
+          margin-top: 50px;
+          margin-bottom: 30px;
+        }
+
+        .ctn {
+          padding: 8px 15px;
+          background: #f5739a;
+          border-radius: 30px;
+          color: whitesmoke;
+          transition: background-color 0.3s ease;
+        }
+
+        .ctn:hover {
+          background-color: #fdca6b; /* Change the color on hover */
+          color: black;
+        }
+
+        .menu-btn {
+          position: absolute;
+          top: 30px;
+          right: 30px;
+          width: 40px;
+          cursor: pointer;
+          display: none;
+        }
+
+        section {
+          width: 80%;
+          margin: 0px auto;
+        }
+
+        .reply-input {
+          padding: 10px;
+          border: 2px solid #ccc;
+          border-radius: 5px;
+          font-size: 16px;
+          max-height: 3px;
+          color: #555;
+          outline: none;
+        }
+
+        .reply-input:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        #new-question {
+          padding: 10px;
+          border: 2px solid #ccc;
+          border-radius: 5px;
+          max-height: 10px;
+          font-size: 16px;
+          color: #555;
+          outline: none;
+        }
+
+        #new-question:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+    </style>
+</head>
+
+<body>
+<section id="header1" class="navbar">
+    <a href="#"
+    ><img src="/images/logo.png" width="80" height="30" class="logo" alt=""
+    /></a>
+    <div>
+        <ul id="nav-links">
+            <li class="ctn"><a href="index.html">Home</a></li>
+            <!-- <li class="ctn"><a href="CommunityChat.html">Post a Question</a></li> -->
+            <li class="ctn"><a href="videos.html">Videos</a></li>
+            <li class="ctn"><a href="connect.html">Connect</a></li>
+            <li class="ctn"><a href="/">Sign Out</a></li>
+            <!-- <li class="ctn"><a href="/" th:href="@{/login}">Sign in</a></li> -->
+        </ul>
+    </div>
+</section>
+
+<div class="welcome-message">Welcome to the Community !!</div>
+
+<div class="discussion-container">
+    <div class="action-buttons">
+        <input type="text" id="new-question" placeholder="Ask a question..." />
+        <button onclick="postQuestion()">Post</button>
+        <button onclick="search()">Search</button>
+    </div>
+
+    <div id="discussion"></div>
+</div>
+
+<script>
+    let questions = []; // Add this line
+    let replies = []; // Add this line
+
+    // Fetch questions from the backend
+    async function fetchQuestions() {
+      try {
+        const response = await fetch("http://localhost:8082/api/questions");
+        questions = await response.json(); // Update the questions array
+        displayQuestions(questions);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    }
+
+    // Display questions on the page
+    function displayQuestions(questions) {
+      const discussionContainer = document.getElementById("discussion");
+      discussionContainer.innerHTML = "";
+
+      questions.forEach((question) => {
+        const questionDiv = document.createElement("div");
+        questionDiv.className = "question";
+        questionDiv.dataset.questionId = question.id;
+        questionDiv.innerHTML = `
+                  <p>${question.user.name}: ${question.content}</p>
+                  <div>
+                      <input type="text" class="reply-input" placeholder="Reply...">
+                      <button onclick="postReply(${question.id})">Reply</button>
+                  </div>
+                  <div class="replies" id="replies-${question.id}"></div>
+              `;
+        discussionContainer.appendChild(questionDiv);
+
+        // Fetch replies for each question
+        fetchReplies(question.id);
+      });
+    }
+
+    // Fetch replies for a specific question
+    async function fetchReplies(questionId) {
+      try {
+        const response = await fetch(
+          `http://localhost:8082/api/replies/${questionId}`
+        );
+        const replies = await response.json();
+        displayReplies(questionId, replies);
+      } catch (error) {
+        console.error(
+          `Error fetching replies for question ${questionId}:`,
+          error
+        );
+      }
+    }
+
+    // Display replies for a specific question
+    function displayReplies(questionId, replies) {
+      const repliesContainer = document.getElementById(
+        `replies-${questionId}`
+      );
+      repliesContainer.innerHTML = "";
+
+      replies.forEach((reply) => {
+        const replyDiv = document.createElement("div");
+        replyDiv.className = "reply";
+        replyDiv.innerHTML = `
+                  <p>${reply.user.name}: ${reply.content}</p>
+                  <div class="reply-icons">
+                      <i class="fas fa-thumbs-up thumbs-up" onclick="thumbsUp(this)"></i>
+                      <span class="thumbs-up-count">0</span>
+                  </div>
+              `;
+        repliesContainer.appendChild(replyDiv);
+      });
+    }
+
+    // Post question logic remains unchanged
+
+    // Other functions remain unchanged
+
+    async function postQuestion() {
+      const newQuestion = document.getElementById("new-question").value;
+
+      if (newQuestion) {
+        try {
+          const response = await fetch(
+            "http://localhost:8082/api/questions",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                content: newQuestion,
+                // other properties as needed
+              }),
+            }
+          );
+
+          if (response.ok) {
+            const savedQuestion = await response.json();
+            questions.unshift(savedQuestion); // Update the questions array
+            displayQuestions(questions);
+            document.getElementById("new-question").value = "";
+          } else {
+            console.error("Error posting question:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error posting question:", error);
+        }
+      }
+    }
+
+    // Post a reply to a specific question
+    async function postReply(questionId) {
+      const replyInput = document.querySelector(
+        `[data-question-id="${questionId}"] .reply-input`
+      );
+      const replyContent = replyInput.value;
+
+      if (replyContent) {
+        try {
+          const response = await fetch("http://localhost:8082/api/replies", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              content: replyContent,
+              questionId: questionId,
+              // other properties as needed
+            }),
+          });
+
+          if (response.ok) {
+            const savedReply = await response.json();
+            replies.push(savedReply); // Update the replies array
+            displayReplies(questionId, [...replies, savedReply]);
+            replyInput.value = "";
+          } else {
+            console.error("Error posting reply:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error posting reply:", error);
+        }
+      }
+    }
+
+    // Fetch questions when the page loads
+    fetchQuestions();
+</script>
+</body>
+</html>
